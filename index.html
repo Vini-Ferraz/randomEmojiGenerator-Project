@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Emoji Generator</title>
+    <style>
+
+        /*The hardest part was those little diamonds in the beginning and 
+        end of the lines, but besides that, everything was fine.*/
+
+        @import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua&family=PT+Sans+Narrow:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            transition: all;
+            transition-duration: 0.5s;
+            transition-timing-function: ease-in-out;
+        }
+
+        body {
+            background: linear-gradient(45deg, #000000, #31008d);
+            font-family: 'Inknut Antiqua', serif;;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .lineFlex {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            margin: 2.5vw 0;
+        }
+
+        #phrase {
+            color: #FFFFFF;
+            font-size: 3vw;
+            text-align: center;
+            line-height: 4.5vw;
+        }
+
+        .line {
+            width: 35vw;
+            height: 0vw;
+            border-color: #C07300;
+            border-width: 0.25vw;
+            border-style: solid;
+        }
+
+        .diamond {
+            width: 2.5vw;
+            height: 2.5vw;
+            background-color: #C07300;
+            transform: rotate(45deg);
+        }
+
+        #myButton {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 25vw;
+            height: 5vw;
+            border: none;
+            border-radius: 0.5vw;
+            background-color: #C07300;
+            color: #000000;
+            font-size: 2.25vw;
+            font-family: 'Inknut Antiqua', serif;
+            font-weight: bold;
+        }
+
+        #myButton:hover {
+            background-color: #ec8e00;
+        }
+
+        #myButton:active {
+            background-color: #a16100;
+        }
+
+        #emojiDisplay {
+            font-size: 6vw;
+            color: #FFFFFF;
+        }
+
+        @media (max-width: 900px) {
+
+            #phrase {
+            font-size: 6vw;
+            line-height: 8vw;  
+            }
+
+            .line {
+            width: 75vw;
+            border-width: 0.5vw;
+            }
+
+            .diamond {
+            width: 4vw;
+            height: 4vw;
+            }
+
+            #myButton {
+            width: 45vw;
+            height: 10vw;
+            border-radius: 1vw;
+            font-size: 3vw;
+            }
+
+            #emojiDisplay {
+            font-size: 10vw;
+            }
+        }
+        @media (max-width: 500px) {
+
+            #phrase {
+            font-size: 9vw;
+            line-height: 10vw;  
+            }
+
+            .line {
+            width: 75vw;
+            border-width: 0.75vw;
+            }
+
+            .diamond {
+            width: 7vw;
+            height: 7vw;
+            }
+
+            #myButton {
+            width: 55vw;
+            height: 15vw;
+            border-radius: 1vw;
+            font-size: 5vw;
+            }
+
+            #emojiDisplay {
+            font-size: 20vw;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!--That part was pretty easy, FlexBox is divine indeed.-->
+
+    <main>
+
+        <div id = "container">
+
+            <div class="lineFlex">
+                <div class = "diamond"></div>
+                <hr class="line">
+                <div class = "diamond"></div>
+            </div>
+
+            <h1 id="phrase">Random Emoji <br> Generator</h1>
+
+            <div id="emojiContainer">
+                <p id="emojiDisplay">⚓</p>
+            </div>
+
+            <button id="myButton" onclick="getEmoji()"> Click Me!</button>
+
+            <div class="lineFlex">
+                <div class = "diamond"></div>
+                <hr class="line">
+                <div class = "diamond"></div>
+            </div>
+        </div>
+
+    </main>
+    
+    <!--I've started by creating the JavaScript part, It was pretty easy,
+        but the "Math.random" was a pain in the ass cause I didn't remember
+        it was case sensitive.-->
+
+    <script>
+
+        const emojis = ["⚓", "⛄", "✌", "✨", "❄", "🌈", "🌚",
+    "🌝", "🍆", "🍑", "🎃", "🐞", "🐤", "🐲", "🐸", "👄", "👌", 
+    "👍", "👎", "👑", "👻", "👽", "👿", "💀", "💔", "💘", "💝",
+    "💣", "💩", "🖕", "🖖", "🗿", "😀", "😁", "😂", "😃", "😄",
+    "😅", "😆", "😇", "😈", "😉", "😊", "😋", "😌", "😍", "😎",
+    "😏", "😐", "😑", "😒", "😓", "😔", "😕", "😖", "😗", "😘",
+    "😙", "😚", "😛", "😜", "😝", "😞", "😠", "😟", "😡", "😢",
+    "😣", "😤", "😥", "😦", "😧", "😨", "😩", "😪", "😫", "😬",
+    "😭", "😮", "😯", "😰", "😱", "😲", "😳", "😴", "😵", "😵",
+    "😷", "🙁", "🙂", "🙂", "🙄", "🙈", "🙉", "🙊", "🙏", "🚀",
+    "🤐", "🤑", "🤒", "🤓", "🤔", "🤕", "🤖", "🤗", "🤘", "🤙",
+    "🤝", "🤞", "🤟", "🤠", "🤡", "🤢", "🤣", "🤤", "🤥", "🤧",
+    "🤨", "🤩", "🤪", "🤫", "🤬", "🤭", "🤮", "🤯", "🦄", "🦈", 
+    "🧠", "🦖", "🥑"];
+        
+
+        function getEmoji() {
+
+            let emojisArraySize = emojis.length;
+
+            let randomNumber = Math.floor(Math.random() * emojisArraySize);
+
+            let emojiChoosen = emojis[randomNumber];
+            
+            document.getElementById("emojiDisplay").innerHTML = emojiChoosen;
+
+        }
+
+    </script>
+
+</body>
+</html>
